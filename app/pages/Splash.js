@@ -1,28 +1,31 @@
-import React from 'react';
+import React from 'react'
 import {
   View,
   Text,
+  StatusBar,
   StyleSheet,
+  Dimensions,
   InteractionManager
-} from 'react-native';
+} from 'react-native'
 
-import MainContainer from '../containers/MainContainer';
+import MainContainer from '../containers/MainContainer'
 
 class Splash extends React.Component {
   componentDidMount () {
-    const {navigator} = this.props;
+    const {navigator} = this.props
     setTimeout(() => {
       InteractionManager.runAfterInteractions(() => {
         navigator.resetTo({
           component: MainContainer,
           name: 'Main'
-        });
-      });
-    }, 1500);
+        })
+      })
+    }, 1500)
   }
   render () {
+    let {height} = Dimensions.get('window')
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, {height: height}]}>
         <Text style={styles.welcome}>
           Welcome to Mars!
         </Text>
@@ -33,7 +36,7 @@ class Splash extends React.Component {
           powered by 银马座
         </Text>
       </View>
-    );
+    )
   }
 }
 
@@ -56,6 +59,6 @@ const styles = StyleSheet.create({
   info: {
     textAlign: 'center',
   }
-});
+})
 
-export default Splash;
+export default Splash

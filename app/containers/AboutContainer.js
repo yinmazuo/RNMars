@@ -1,7 +1,7 @@
-'use strict';
-import React from 'react';
-import {connect} from 'react-redux';
-import About from '../pages/About';
+'use strict'
+import React from 'react'
+import {connect} from 'react-redux'
+import About from '../pages/About'
 
 class AboutContainer extends React.Component {
   render () {
@@ -12,10 +12,10 @@ class AboutContainer extends React.Component {
 }
 
 function mapStateToProps (state) {
-  const {About} = state;
+  const {About} = state
   return {
     About
   }
 }
 
-export default connect(mapStateToProps)(AboutContainer);
+export default connect(mapStateToProps)(AboutContainer)

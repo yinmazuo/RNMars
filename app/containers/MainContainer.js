@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Main from '../pages/Main';
-import * as ZhihuNewsActions from '../actions/ZhihuNewsActions';
+import * as V2EXActions from '../actions/V2EXActions';
 
 class MainContainer extends React.Component {
   constructor(props) {
@@ -17,10 +17,10 @@ class MainContainer extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ store: state.ZhihuNews});
+const mapStateToProps = state => ({ store: state.V2EX});
 
 const mapDispatchToProps = (dispatch) => ({
-	actions: bindActionCreators(ZhihuNewsActions, dispatch)
+	actions: bindActionCreators(V2EXActions, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);

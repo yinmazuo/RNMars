@@ -3,25 +3,99 @@
 import React from 'react'
 import {
   View,
-  ListView
+  Text,
+  ListView,
+  StatusBar,
+  RefreshControl,
+  ToolbarAndroid,
+  Dimensions,
+  TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native'
 
 import Card from '../components/Card'
+import Tabbar from '../components/Tabbar'
 
 export default class Main extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+    this.state = {
+      ds,
+      isRefreshing: false,
+      status: 'latest'
+    }
+    this._onRefresh = this._onRefresh.bind(this)
   }
   componentDidMount() {
-    let {fetchLatestNews} = this.props.actions;
-    fetchLatestNews();
+    let { fetchLatestTopics } = this.props.actions
+    fetchLatestTopics()
   }
   render() {
-    let {data} = this.props.store;
-    return(
-      <View style={{flex: 1,alignItems: 'center',justifyContent: 'center'}}>
-        <Card data={data.date}/>
-      </View>
-    )
+      let {data, isDone} = this.props.store,
+          {navigator} = this.props,
+          {height, width} = Dimensions.get('window')
+      this.state.ds = this.state.ds.cloneWithRows(this.props.store.data)
+
+      return(
+        <View style={{flex: 1,flexDirection: 'column', justifyContent: 'space-between'}}>
+          <StatusBar
+             backgroundColor="#005fff"
+             barStyle="light-content"
+           />
+          <ToolbarAndroid
+            style={{backgroundColor: '#007fff', height: 60, marginBottom: 10}}
+            titleColor='#fff'
+            title={'Mars-V2EX'}
+          >
+            <Text style={{color: '#fff'}}>
+              @yinmazuo
+            </Text>
+          </ToolbarAndroid>
+          {
+            isDone ?
+            <ListView
+              dataSource={this.state.ds}
+              renderRow={(rowData) => <Card {...rowData} navigator={navigator} />}
+              style={{backgroundColor: 'rgba(192, 192, 192, .2)'}}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.isRefreshing}
+                  onRefresh={this._onRefresh}
+                  tintColor="#007fff"
+                  title="Loading..."
+                  titleColor="#007fff"
+                  colors={['#007fff']}
+                  progressBackgroundColor="#fff"
+                />
+              }
+            /> :
+            <ActivityIndicator
+              color='#007fff'
+              size='large'
+            />
+          }
+          <Tabbar
+            tabs={['Home', 'Node', 'About']}
+          />
+        </View>
+      )
   }
+  _onRefresh() {
+     this.setState({isRefreshing: true})
+     let { fetchLatestTopics, fetchHotTopics } = this.props.actions
+     if (this.state.status === 'latest') {
+       fetchHotTopics()
+       this.setState({status: 'hot'})
+     } else if (this.state.status === 'hot') {
+       fetchLatestTopics()
+       this.setState({status: 'latest'})
+     }
+     setTimeout(() => {
+       this.setState({
+         isRefreshing: false,
+         ds: this.state.ds.cloneWithRows(this.props.store.data),
+       })
+     }, 3000)
+   }
 }
