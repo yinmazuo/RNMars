@@ -14,7 +14,7 @@ import {
 } from 'react-native'
 
 import Card from '../components/Card'
-import Tabbar from '../components/Tabbar'
+import DrawerLayout from '../components/DrawerLayout'
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -38,47 +38,47 @@ export default class Main extends React.Component {
       this.state.ds = this.state.ds.cloneWithRows(this.props.store.data)
 
       return(
-        <View style={{flex: 1,flexDirection: 'column', justifyContent: 'space-between'}}>
-          <StatusBar
-             backgroundColor="#005fff"
-             barStyle="light-content"
-           />
-          <ToolbarAndroid
-            style={{backgroundColor: '#007fff', height: 60, marginBottom: 10}}
-            titleColor='#fff'
-            title={'Mars-V2EX'}
-          >
-            <Text style={{color: '#fff'}}>
-              @yinmazuo
-            </Text>
-          </ToolbarAndroid>
-          {
-            isDone ?
-            <ListView
-              dataSource={this.state.ds}
-              renderRow={(rowData) => <Card {...rowData} navigator={navigator} />}
-              style={{backgroundColor: 'rgba(192, 192, 192, .2)'}}
-              refreshControl={
-                <RefreshControl
-                  refreshing={this.state.isRefreshing}
-                  onRefresh={this._onRefresh}
-                  tintColor="#007fff"
-                  title="Loading..."
-                  titleColor="#007fff"
-                  colors={['#007fff']}
-                  progressBackgroundColor="#fff"
-                />
-              }
-            /> :
-            <ActivityIndicator
-              color='#007fff'
-              size='large'
-            />
-          }
-          <Tabbar
-            tabs={['Home', 'Node', 'About']}
-          />
-        </View>
+        <DrawerLayout>
+          <View style={{flex: 1,flexDirection: 'column'}}>
+            <StatusBar
+               backgroundColor="#005fff"
+               barStyle="light-content"
+             />
+            <ToolbarAndroid
+              style={{backgroundColor: '#007fff', height: 60, marginBottom: 10}}
+              titleColor='#fff'
+              title={'Mars-V2EX'}
+            >
+              <Text style={{color: '#fff'}}>
+                @yinmazuo
+              </Text>
+            </ToolbarAndroid>
+            {
+              isDone ?
+              <ListView
+                dataSource={this.state.ds}
+                renderRow={(rowData) => <Card {...rowData} navigator={navigator} />}
+                style={{backgroundColor: 'rgba(192, 192, 192, .2)'}}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={this.state.isRefreshing}
+                    onRefresh={this._onRefresh}
+                    tintColor="#007fff"
+                    title="Loading..."
+                    titleColor="#007fff"
+                    colors={['#007fff']}
+                    progressBackgroundColor="#fff"
+                  />
+                }
+              /> :
+              <ActivityIndicator
+                color='#007fff'
+                size='large'
+                style={{marginTop: 20}}
+              />
+            }
+          </View>
+        </DrawerLayout>
       )
   }
   _onRefresh() {

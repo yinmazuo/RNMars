@@ -7,24 +7,33 @@ import{
   TouchableOpacity
 } from 'react-native'
 
+import * as HttpService from '../utils/HttpService'
+
 import TopicDetail from '../pages/TopicDetail'
+import WebViewPage from '../pages/WebViewPage'
 
 export default class Card extends React.Component {
   constructor(props) {
     super(props)
   }
   render() {
-    let {navigator, member, modalVisible} = this.props,
+    let { navigator, member, node } = this.props,
         data = this.props
+
     return (
       <View style={style.card}>
         <View style={style.header}>
           <TouchableOpacity onPress={() => {
-            // navigator.push({
-            //   name: 'UserInfo',
-            //   component: UserInfo,
-            //   data: member.username
-            // })
+            HttpService.GetV2EX('/members/show.json?username=' + member.username)
+              .then(
+                (res) => {
+                  navigator.push({
+                    name: 'WebView',
+                    component: WebViewPage,
+                    data: res.url
+                  })
+                }
+              )
           }}>
             <View style={style.avatar}>
               <Image
@@ -63,11 +72,11 @@ export default class Card extends React.Component {
 
         <View style={style.footer}>
           <TouchableOpacity onPress={() => {
-            // navigator.push({
-            //   name: 'NodeInfo',
-            //   component: NodeInfo,
-            //   data: member.username
-            // })
+            navigator.push({
+              name: 'WebView',
+              component: WebViewPage,
+              data: node.url
+            })
           }}>
             <Text style={{color: '#999'}}>
               {this.props.node.title}

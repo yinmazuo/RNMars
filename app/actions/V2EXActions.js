@@ -1,7 +1,7 @@
 'use strict';
 
-import * as Actiontype from '../constants/V2EXActionType';
-import * as HttpService from '../utils/HttpService';
+import * as Actiontype from '../constants/V2EXActionType'
+import * as HttpService from '../utils/HttpService'
 
 export function fetchAllNodes() {
   return {
