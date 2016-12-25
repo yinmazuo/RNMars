@@ -38,7 +38,7 @@ export default class Main extends React.Component {
       this.state.ds = this.state.ds.cloneWithRows(this.props.store.data)
 
       return(
-        <DrawerLayout>
+        <DrawerLayout navigator={navigator}>
           <View style={{flex: 1,flexDirection: 'column'}}>
             <StatusBar
                backgroundColor="#005fff"
