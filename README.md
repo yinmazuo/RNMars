@@ -2,8 +2,8 @@
 React-Native V2EX App
 
 ## Demo
-![Demo](https://github.com/yinmazuo/RNMars/blob/master/screenshot/Demo01.gif)
-![Demo](https://github.com/yinmazuo/RNMars/blob/master/screenshot/Demo02.gif)
+![Demo](https://github.com/yinmazuo/RNMars/blob/master/screenshot/demo01.gif)
+![Demo](https://github.com/yinmazuo/RNMars/blob/master/screenshot/demo02.gif)
 
 ## Getting Started
 ```
